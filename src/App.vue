@@ -1,17 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <input type="text" v-model="name">
+  <button @click="say_hello">say hello</button>
+  <p>{{ greeting }}</p>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { invoke } from '@tauri-apps/api'
 
 export default {
+  data() {
+    return {
+      greeting: '',
+      name: ''
+    }
+  },
   name: 'App',
   components: {
-    HelloWorld
+  },
+  methods: {
+    say_hello() {
+    invoke('greet', { name: this.name }).then((response) => {
+      this.greeting = response;
+    });
+  },
+
   }
 }
+
+
+
 </script>
 
 <style>
