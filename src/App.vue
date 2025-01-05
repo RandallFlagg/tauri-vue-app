@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import { invoke } from '@tauri-apps/api'
-
 export default {
   data() {
     return {
@@ -18,17 +16,13 @@ export default {
   components: {
   },
   methods: {
-    say_hello() {
-    invoke('greet', { name: this.name }).then((response) => {
+    async say_hello() {
+      const response = await window.__TAURI__.core.invoke('greet', { name: this.name });
       this.greeting = response;
-    });
+    }
   },
 
   }
-}
-
-
-
 </script>
 
 <style>
